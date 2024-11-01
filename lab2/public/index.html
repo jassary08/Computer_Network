@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <style>
+        /* 设置通用样式 */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        /* 容器居中对齐 */
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            background-image: url('background.png'); 
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* 标题样式 */
+        h1 {
+            color: #333;
+            font-size: 2.5em; /* 调整字体大小 */
+            margin-bottom: 20px;
+            font-weight: bold; /* 加粗字体 */
+            border-bottom: 3px solid #d1d1d1;
+            padding-bottom: 10px;
+            letter-spacing: 1px; /* 增加字间距 */
+        }
+        /* 信息段落样式 */
+        p {
+            font-size: 1.2em; /* 增大字体 */
+            line-height: 1.8;
+            margin: 15px 0;
+            font-weight: 500; /* 半粗体 */
+            color: #555; /* 颜色稍微变深 */
+        }
+        /* 图片样式 */
+        img {
+            width: 150px;
+            height: auto;
+            border-radius: 50%;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        /* 音频样式 */
+        audio {
+            margin-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>个人信息</h1>
+        <p>专业：物联网工程</p>
+        <p>学号：2212039</p>
+        <p>姓名：田晋宇</p>
+        <img src="logo.jpg" alt="Logo">
+        <audio controls>
+            <source src="introduction.m4a" type="audio/mpeg">
+        </audio>
+    </div>
+</body>
+</html>
