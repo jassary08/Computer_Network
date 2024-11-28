@@ -260,7 +260,6 @@ public:
                         // 动态调整 RTT 和超时时间
                         auto now = chrono::steady_clock::now();
                         double sample_rtt = chrono::duration<double, milli>(now - segment_send_time).count();
-                        rtt_samples.push_back(sample_rtt);
                         estimated_rtt = (1 - alpha) * estimated_rtt + alpha * sample_rtt;
                         dev_rtt = (1 - beta) * dev_rtt + beta * abs(sample_rtt - estimated_rtt);
                         timeout_interval = estimated_rtt + 4 * dev_rtt;
