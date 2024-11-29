@@ -170,6 +170,7 @@ public:
         strncpy_s(header_packet.data, file_name.c_str(), MAX_DATA_SIZE - 1); // 写入文件名
         header_packet.length = file_size; // 写入文件大小
         header_packet.check = header_packet.Calculate_Checksum(); // 设置校验和
+
         // 发送文件头消息
         if (sendto(clientSocket, (char*)&header_packet, sizeof(header_packet), 0,
             (sockaddr*)&routerAddr, sizeof(routerAddr)) == SOCKET_ERROR) {
@@ -186,7 +187,7 @@ public:
             socklen_t addr_len = sizeof(routerAddr);
             if (recvfrom(clientSocket, (char*)&ack_packet, sizeof(ack_packet), 0,
                 (sockaddr*)&routerAddr, &addr_len) > 0) {
-                if (ack_packet.Is_ACK() && ack_packet.ack == header_packet.seq) {
+                if (ack_packet.Is_ACK() && ack_packet.ack == header_packet.seq && ack_packet.CheckValid()) {
                     cout << "[日志] 收到文件头信息的 ACK 确认。" << endl;
                     break; // 成功接收确认，退出重传循环
                 }
@@ -254,7 +255,7 @@ public:
                 socklen_t addr_len = sizeof(routerAddr);
                 if (recvfrom(clientSocket, (char*)&ack_packet, sizeof(ack_packet), 0,
                     (sockaddr*)&routerAddr, &addr_len) > 0) {
-                    if (ack_packet.Is_ACK() && ack_packet.ack == data_packet.seq) {
+                    if (ack_packet.Is_ACK() && ack_packet.ack == data_packet.seq && ack_packet.CheckValid()) {
                         ack_received = true;
 
                         // 动态调整 RTT 和超时时间

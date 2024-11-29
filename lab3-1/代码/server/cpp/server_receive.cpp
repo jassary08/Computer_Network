@@ -92,7 +92,7 @@ public:
                     // 设置第二次握手的消息
                     handshakePackets[1].src_port = SERVER_PORT;   // 服务器端的端口
                     handshakePackets[1].dest_port = ROUTER_PORT; // 路由器的端口
-                    handshakePackets[1].seq =  ++seq; // 增加序列号
+                    handshakePackets[1].seq = ++seq; // 增加序列号
                     handshakePackets[1].ack = handshakePackets[0].seq;     // 确认客户端序列号
                     handshakePackets[1].Set_SYN();
                     handshakePackets[1].Set_ACK();
@@ -133,7 +133,7 @@ public:
             auto now = chrono::steady_clock::now();
             if (chrono::duration_cast<chrono::milliseconds>(now - startTime).count() > TIMEOUT) {
                 cout << "[日志] 等待第三次握手消息超时，重新发送 SYN+ACK。" << endl;
-                
+
                 handshakePackets[1].check = handshakePackets[1].Calculate_Checksum();
                 if (sendto(serverSocket, (char*)&handshakePackets[1], sizeof(handshakePackets[1]), 0,
                     (sockaddr*)&routerAddress, routerAddrLen) == SOCKET_ERROR) {
@@ -166,6 +166,7 @@ public:
                     ackPacket.Set_ACK();
                     ackPacket.seq = ++seq;
                     ackPacket.ack = headerPacket.seq;
+                    ackPacket.check = ackPacket.Calculate_Checksum();
                     if (sendto(serverSocket, (char*)&ackPacket, sizeof(ackPacket), 0,
                         (sockaddr*)&routerAddress, routerAddrLen) == SOCKET_ERROR) {
                         cerr << "[错误] ACK 发送失败，错误代码：" << WSAGetLastError() << endl;
@@ -216,6 +217,7 @@ public:
                     ackPacket.Set_ACK();
                     ackPacket.seq = ++seq;
                     ackPacket.ack = dataPacket.seq;
+                    ackPacket.check = ackPacket.Calculate_Checksum();
 
                     if (sendto(serverSocket, (char*)&ackPacket, sizeof(ackPacket), 0,
                         (sockaddr*)&routerAddress, routerAddrLen) == SOCKET_ERROR) {
