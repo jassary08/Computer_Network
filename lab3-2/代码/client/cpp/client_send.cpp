@@ -184,7 +184,7 @@ public:
                     if (ack_msg.ack >= Base_Seq + Header_Seq) {
                         Base_Seq = ack_msg.ack - Header_Seq + 1;
                     }
-
+                    printWindowStatus();
                     // 检查是否完成所有消息传输
                     if (ack_msg.ack - Header_Seq == Msg_Num + 1) {
                         Over = true;
@@ -258,6 +258,7 @@ public:
             SetConsoleTextAttribute(hConsole, 7);
             return false;
         }
+        cout << "[日志] 成功发送数据包，SEQ 序列号： " << data_msg[next_seq - 1].seq << endl;
         return true;
     }
 
